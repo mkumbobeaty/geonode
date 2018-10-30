@@ -1,0 +1,13 @@
+.navbar-brand {
+    width: 373px;
+    height: 79px;
+    background: url(../img/utu-en.png) no-repeat;
+}
+
+/* #wrap {
+    margin: 75px 75px;
+} */
+
+.navbar-inverse {
+    background: #0e60c3;
+}
