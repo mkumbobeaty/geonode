@@ -74,7 +74,7 @@ This is where you can override the hero area block. You can simply modify the co
           <img src="{{ STATIC_URL }}img/layerslider01.jpg" alt="">
           <div class="container">
             <div class="carousel-caption">
-              <h1>{% trans "Welcome to the " %}<strong>WFP</strong>GeoNode</h1>
+              <h1>{% trans "Welcome to the " %}<strong>UDSM</strong>GeoNode</h1>
               <p class="lead">{% trans "Our corporate web application for creating and sharing geospatial " %}<br />
               {% trans "data and maps designed for non-GIS experts." %}</p>
               <a class="btn btn-danger" href="/help/">{% trans "Get Started" %}</a>
@@ -101,7 +101,7 @@ This is where you can override the hero area block. You can simply modify the co
               <p class="lead">{% trans "GeoNode facilitates data standardization within our organization by providing" %}<br />
               {% trans "a clear process for uploading your gis data, compiling metadata and styling." %}</p>
               <a class="btn btn-danger" href="/upload/">{% trans "Upload Layers" %}</a>
-              <p class="image-credit">Photo: WFP/Louis Hamann</p>
+              <p class="image-credit">Photo: UDSM</p>
             </div>
           </div>
         </div>
@@ -121,12 +121,12 @@ This is where you can override the hero area block. You can simply modify the co
               <div class="span2"><p><a href="/people/">{% trans "Users" %} <span class="count">{{ facets.users }}</span></a></p></div>
             </div>
           </div>
-          <div class="span4">
+          <!-- <div class="span4">
             <form class="input-append pull-right" action="{% url "search" %}" method="GET">
               {# csrf_token #}
               <input id="search" placeholder="{% trans 'Search...' %}" type="text" name="q"/>
             </form>
-          </div>
+          </div> -->
         </div>
       </div>
     </section>
@@ -137,7 +137,7 @@ This is where you can override the hero area block. You can simply modify the co
 
 {% block mainbody %}
 <!-- featured maps -->
-<section class="featured-maps">
+<!-- <section class="featured-maps">
   <h3>{% trans "Recent Maps" %}</h3>
   <div class="row">
     {% for map in featured_maps %}
@@ -156,24 +156,25 @@ This is where you can override the hero area block. You can simply modify the co
     </div>
     {% endfor %}
   </div>
-</section>
+</section> -->
 
-<section class="boxes">
+<section class="boxes" style="margin-top:25px">
+ <div class="container">
 <div class="row">
-  <div class="span4">
-    <a href="/layers/" class="div-link">
+  <div class="col-md-4">
+    <a href="/layers/" class="div-link" >
       <div class="row">
         <div class="span1">
           <i class="icon-unchecked icon-rotate-45 icon-4x"></i>
         </div>
-        <div class="span3">
+        <div class="span3"  >
           <h3>{% trans "Explore Data" %}</h3>
           <p>{% trans "Click to search for geospatial data from our corporate SDI or published by other users, organizations and public sources." %}</p>
         </div>
       </div>
     </a>
   </div>
-  <div class="span4">
+  <div class="col-md-4">
     <a href="/maps/" class="div-link">
       <div class="row">
         <div class="span1" style="text-align:center"><i class="icon-map-marker icon-4x"></i></div>
@@ -184,7 +185,7 @@ This is where you can override the hero area block. You can simply modify the co
       </div>
     </a>
   </div>
-  <div class="span4">
+  <div class="col-md-4">
     <a href="/upload/" class="div-link">
     <div class="row">
       <div class="span1"><i class="icon-cloud-upload icon-4x"></i></div>
@@ -195,6 +196,7 @@ This is where you can override the hero area block. You can simply modify the co
       </div>
     </a>
   </div>
+</div>
 </div>
 </section>
 {% endblock %}
