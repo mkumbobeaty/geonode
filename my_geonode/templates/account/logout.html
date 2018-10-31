@@ -1,0 +1,33 @@
+{% extends "site_base.html" %}
+
+{% load url from future %}
+{% load i18n %}
+
+{% block head_title %}{% trans "Log out" %}{% endblock %}
+
+{% block jumbotron %}
+<header class="jumbotron">
+  <div class="container">
+    <div class="row">
+      <h1 class="span6"><i class="icon-off"></i>{% trans "Log Out" %}</h1>
+    </div>
+  </div>
+</header>
+{% endblock %}
+
+{% block body %}
+  <div class="row">
+    <div class="span6">
+      <form method="POST" action="{% url "account_logout" %}" class="form-horizontal">
+        <!-- <h2 class="page-title">{% trans "Log out" %}</h2> -->
+        <fieldset>
+          {% csrf_token %}
+          <p>{% trans "Are you sure you want to log out?" %}</p>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-danger pull-right">{% trans "Log out" %}</button>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+{% endblock %}

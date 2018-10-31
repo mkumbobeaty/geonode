@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+{% load i18n avatar_tags %}
+
+
+{% block head %}
+  <!-- <link href="http://getbootstrap.com/2.3.2/assets/css/bootstrap.css" rel="stylesheet"/> -->
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
+  <link href="{{ STATIC_URL }}geonode/css/ext-compatibility.css" rel="stylesheet" />
+  {% if DEBUG_STATIC %}
+  <link href="{{ STATIC_URL }}lib/css/jquery.dataTables.css" rel="stylesheet" />
+  <link href="{{ STATIC_URL }}lib/css/select2.css" rel="stylesheet"/>
+  {% else %}
+  <link href="{{ STATIC_URL }}lib/css/assets.min.css" rel="stylesheet"/>
+  {% endif %}
+  <link href="{{ STATIC_URL }}css/wfp.css" rel="stylesheet"/>
+  <script type="text/javascript" src="//use.typekit.net/ooy8mlk.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+  
+  <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-47869367-1']);
+  _gaq.push(['_setDomainName', 'wfp.org']);
+  _gaq.push(['_setAllowLinker', true]);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+  {% block extra_head %}
+  {% endblock %}
+{% endblock %}
+
+
+{% block header %}
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <div class="span3">
+        <a class="brand" href="/"><strong>WFP</strong>GeoNode</a>
+      </div>
+      <div class="span8 pull-right">
+        <div class="row">
+          <div class="nav-collapse">
+            <ul class="nav pull-right">
+              {% if user.is_authenticated %}
+              <!-- <li class="user-avatar">
+                {% avatar user 32 %}
+              </li> -->
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle user" data-toggle="dropdown">
+                  {{ user.username }}
+                  <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a href="{{ user.get_profile.get_absolute_url }}"><i class="icon-user"></i> {% trans "Profile" %}</a></li>
+                  {% if user.is_staff %}
+                  <li><a href="{% url "admin:index" %}"><i class="icon-cog"></i> {% trans "Admin" %}</a></li>
+                  {% endif %}
+                  {% if perms.announcements.can_manage %}
+                  <li><a href="{% url "announcements_list" %}"><i class="icon-bullhorn"></i> {% trans "Announcements" %}</a></li>
+                  {% endif %}
+                  {% if user.is_superuser %}
+                  <li><a href="{{ GEOSERVER_BASE_URL }}"><i class="icon-globe"></i> {% trans "GeoServer" %}</a></li>
+                  {% endif %}
+                  <li><a href="{% url "recent-activity" %}"><i class="icon-fire"></i> {% trans "Recent Activity" %}</a></li>
+                  <li class="divider"></li>
+                  <li><a href="{% url "account_logout" %}"><i class="icon-off"></i> {% trans "Log out" %}</a></li>
+                </ul>
+              </li>
+              {% else %}
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle login" data-toggle="dropdown">Sign in <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li>
+                    <form action="{% url "account_login" %}" method="post" class="sign-in">
+                    {% csrf_token %}
+                      <label for="id_username">{% trans "Username" %}:</label>
+                      <input id="id_username" name="username" type="text" />
+                      <label for="id_password">{% trans "Password" %}:</label>
+                      <input id="id_password" name="password" type="password" />
+                      <label class="checkbox">
+                        <input type="checkbox" />
+                        {% trans "Remember Me" %}
+                      </label>
+                      <button type="submit" class="btn pull-right">{% trans "Sign in" %}</button>
+                    </form>
+                  </li>
+                </ul>
+              </li>
+              {% if REGISTRATION_OPEN %}
+              <li class="navbar-text">{% trans "or" %}</li>
+              <li><a href="{% url "account_signup" %}">{% trans "Register" %}</a></li>
+              {% endif %}
+              {% endif %}
+            </ul>
+            <form class="input-append pull-right" action="{% url "search" %}" method="GET">
+            {# csrf_token #}
+              <input id="search" type="text" name="q"/>
+            </form>
+          </div> <!-- /.nav-collapse -->
+        </div> <!-- /.row -->
+        <div class="row">
+          <div class="nav-collapse">
+            <ul class="nav pull-right">
+              <li id="nav_data">
+                <a href="{% url "layer_browse" %}">{% trans "Layers" %}</a>
+              </li>
+              <li id="nav_maps">
+                <a href="{% url "maps_browse" %}">{% trans "Maps" %}</a>
+              </li>
+              <li id="nav_documents" class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    {% trans "Documents" %}
+                    <i class="caret"></i>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="{% url "documents_browse" %}">{% trans "Documents" %}</a></li>
+                    <li><a href="{% url "wfpdocs-browse" %}">{% trans "Static Maps" %}</a></li>
+                </ul>
+            </li>
+              <li id="nav_people">
+                <a href="{% url "profile_browse" %}">{% trans "Users" %}</a>
+              </li>
+            </ul>
+          </div> <!-- /.nav-collapse -->
+        </div> <!-- /.row -->
+      </div>
+    </div> <!-- /.container -->
+  </div>
+</div>
+
+{% block jumbotron %}{% endblock %}
+{% endblock header %}
+
+
+{% block extra_tab %}
+{% comment %}
+Add Tab for Third Party Apps
+<li>
+ <a href="{{ PROJECT_ROOT }}app">App</a>
+</li>
+
+{% endcomment %}
+{% endblock %}
+    {% block footer %}
+    <footer class="footer">
+      <div class="container">
+        <div class="row">
+        <div class="span6 pull-left">
+          {% trans "Powered by" %} <a href="http://geonode.org">{% trans "GeoNode" %}</a> 2.0 | 
+          <a href="/contacts/">{% trans "Contacts" %}</a> | 
+          <a href="http://cdn.wfp.org/legal/terms/">{% trans "Terms of Use" %}</a> | 
+          <a href="/help/">{% trans "Get Started" %}</a>
+        </div>
+        <div class="span1 pull-right">
+          <a href="http://www.wfp.org"><img src="{{ STATIC_URL }}img/wfp_logo_36_white.png"></a>          
+        </div> <!-- /.pull-right -->
+        <div class="span2 pull-right">
+          {% if csrf_token != "NOTPROVIDED" %}
+            {% get_current_language as LANGUAGE %}
+            <form class="form-inline" action="/i18n/setlang/" method="post">
+            {% csrf_token %}
+              <select class="input span2 language" dir="rtl" name="language" onchange="javascript:form.submit()">
+                {% for lang in LANGUAGES %}
+                <option value="{{ lang.0 }}" {% ifequal LANGUAGE_CODE lang.0 %} selected="selected"{% endifequal %}>
+                  {{ lang.1 }}
+                </option>
+                {% endfor %}
+              </select>
+            </form>
+            {% endif %}
+          </div>
+          </div>
+      </div> <!-- /.container -->
+    </footer>
+    {% endblock footer %}

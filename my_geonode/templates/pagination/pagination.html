@@ -1,0 +1,22 @@
+{% load i18n %}
+
+<div class="pagination">
+  <span>results {{ page_obj.start_index }}-{{ page_obj.end_index }} of {{ page_obj.paginator.count }}</span>
+  <ul class="pull-right">
+    <li>
+      {% if page_obj.has_previous %}
+      <a href="?page={{ page_obj.previous_page_number }}{{ getvars }}{{ hashtag }}" class="prev"><i class="icon-chevron-left"></i> {% trans "Previous" %}</a>
+      {% else %}
+      <span class="disabled prev"><i class="icon-chevron-left"></i> {% trans "previous" %}</span>
+      {% endif %}
+    </li>
+    <li>page <b class="current page">{{ page_obj.number }}</b> of <b class="page_total">{{ page_obj.paginator.num_pages }}</b></li>
+    <li>
+      {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}{{ getvars }}{{ hashtag }}" class="next more">{% trans "Next" %} <i class="icon-chevron-right"></i></a>
+      {% else %}
+      <span class="disabled next">{% trans "next" %} <i class="icon-chevron-right"></i></span>
+      {% endif %}
+    </li>
+  </ul>   
+</div>

@@ -1,0 +1,23 @@
+{% load friendly_loader %}
+{% friendly_load avatar_tags %}
+{% load i18n %}
+
+  {% with 40 as avatar_size %}
+    <p>
+    {% if profile.user %}
+      <a href="{% url "profile_detail" profile.user.username %}" class="avatar">{% avatar profile.user avatar_size %}</a>
+    {% else %}
+      <img width="{{ avatar_size }}px" src="{{ STATIC_URL }}geonode/img/default-avatar.jpg" />
+    {% endif %}
+  {% endwith %}
+    {% if profile.user %}
+      <a href="{{ profile.get_absolute_url }}">{{ profile.name }}</a>, 
+    {% else %}
+      {{ profile.name }}
+    {% endif %}
+    {% if profile.organization %}
+      {{ profile.organization }}
+    {% else %}
+      {% trans "No Group" %}
+      {% endif %}
+    </p>

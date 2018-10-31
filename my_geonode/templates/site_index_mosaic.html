@@ -1,0 +1,211 @@
+{% extends 'index.html' %}
+{% load i18n avatar_tags announcements_tags %}
+{% load i18n %}
+{% load maps_tags %}
+{% load layers_tags %}
+{% load pagination_tags %}
+{% load staticfiles %}
+{% load url from future %}
+{% comment %}
+This is where you can override the hero area block. You can simply modify the content below or replace it wholesale to meet your own needs. 
+{% endcomment %}
+
+{% block extra_head %}
+<style>
+.row {
+  margin-left: 0;
+  *zoom: 1;
+}
+.row:before,
+.row:after {
+  display: table;
+  content: "";
+  line-height: 0;
+}
+.row:after {
+  clear: both;
+}
+
+[class*="span"] {
+  float: left;
+  min-height: 1px;
+  margin-left: 0;
+}
+.container,
+.navbar-static-top .container,
+.navbar-fixed-top .container,
+.navbar-fixed-bottom .container {
+  width: 960px;
+}
+.span12 {
+  width: 960px;
+}
+.span11 {
+  width: 880px;
+}
+.span10 {
+  width: 800px;
+}
+.span9 {
+  width: 720px;
+}
+.span8 {
+  width: 640px;
+}
+.span7 {
+  width: 560px;
+}
+.span6 {
+  width: 480px;
+}
+.span5 {
+  width: 400px;
+}
+.span4 {
+  width: 320px;
+}
+.span3 {
+  width: 240px;
+}
+.span2 {
+  width: 160px;
+}
+.span1 {
+  width: 80px;
+}
+.offset12 {
+  margin-left: 960px;
+}
+.offset11 {
+  margin-left: 880px;
+}
+.offset10 {
+  margin-left: 800px;
+}
+.offset9 {
+  margin-left: 720px;
+}
+.offset8 {
+  margin-left: 640px;
+}
+.offset7 {
+  margin-left: 560px;
+}
+.offset6 {
+  margin-left: 480px;
+}
+.offset5 {
+  margin-left: 400px;
+}
+.offset4 {
+  margin-left: 320px;
+}
+.offset3 {
+  margin-left: 240px;
+}
+.offset2 {
+  margin-left: 160px;
+}
+.home-thumb {
+  margin-top: -104px;
+  z-index:999;
+  -webkit-transition: all 0.3s ease;
+     -moz-transition: all 0.3s ease;
+       -o-transition: all 0.3s ease;
+          transition: all 0.3s ease;
+}
+.home-thumb a:hover {
+  opacity: 0.2;
+  -webkit-transition: all 0.3s ease;
+     -moz-transition: all 0.3s ease;
+       -o-transition: all 0.3s ease;
+          transition: all 0.3s ease;
+}
+.pippo {
+  font-size: 24px;
+  margin-top: 60px;
+  opacity: 1;
+  text-align:center;
+}
+.pippo a {
+  color: white;
+}
+.pippo a:hover {
+  
+}
+</style>
+{% endblock %}
+
+{% block jambotron %}
+
+{% endblock %}
+
+{% block hero %}
+{% endblock %}
+
+{% block mainbody %}
+<div class="container" style="margin-top: 20px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);">
+  <div class="row">
+    <div class="span3" style="background:rgb(0, 136, 255); height:160px; text-align:center">
+      <img style="margin-top:20px" src="/static/img/wfp_logo_big.png">
+    </div>
+    <div class="span3" style="background:url(/static/img/img4.jpg) no-repeat; height:160px; color:#fff;"></div>
+    <div class="span3" style="background:url(/static/img/img2.jpg) no-repeat; height:160px; color:#fff;"></div>
+    {% if user.is_authenticated %}
+    <a href="/upload/">
+      <div class="span3" style="background:rgb(0, 136, 255); height:160px; text-align:center">
+        <i class="icon-cloud-upload" style="color:#fff; font-size: 60px; line-height:2em; text-align:center"></i>
+        <p style="color:#fff; font-size:1.5em; line-height:0">Upload Layer</p>
+      </div>
+    </a>
+    {% else %}
+    <div class="span3" style="background:url(/static/img/img1.jpg) no-repeat; height:160px; color:#fff;"></div>
+    {% endif %}
+  </div>
+  <div class="row">
+    <a href="/help/">
+      <div class="span3" style="background:rgb(204, 85, 34); height:160px; text-align:center">
+        <i class="icon-chevron-sign-right" style="color:#fff; font-size: 60px; line-height:2em; text-align:center"></i>
+        <p style="color:#fff; font-size:1.5em; line-height:0">Get Started</p>
+      </div>
+    </a>
+    <div class="span6" style="background:url(/static/img/img0.jpg); height:160px; text-align:center; color:#fff;">
+      <p style="font-size:5em; line-height:2em">GeoNode</p>
+    </div>
+    <a href="/layers/">
+      <div class="span3" style="background:rgb(26, 84, 166); height:160px; text-align:center; color:#fff;">
+        <i class="icon-check-empty icon-rotate-45" style="color:#fff; font-size: 60px; line-height: 2em; text-align:center"></i>
+        <p style="font-size:1.5em; line-height:0">Layers</p>
+      </div>
+    </a>
+  </div>
+  <div class="row">
+    <div class="span3" style="background:url(/static/img/img3.jpg) no-repeat; height:160px; color:#fff;"></div>
+    <div class="span3" style="background:url(/static/img/img9.jpg) no-repeat; height:160px; color:#fff;"></div>
+    <a href="/maps/">
+      <div class="span3" style="background:rgb(0, 136, 255); height:160px; text-align:center; color:#fff;">
+        <i class="icon-map-marker" style="color:#fff; font-size: 60px; line-height: 2em; text-align:center"></i>
+        <p style="font-size:1.5em; line-height:0">Maps</p>
+      </div>
+    </a>
+    <div class="span3" style="background:url(/static/img/img6.jpg) no-repeat; height:160px; color:#fff;"></div>
+  </div>
+  <div class="row">
+    <div class="span3" style="height:160px; background:rgb(0, 136, 255)">
+      <p class="pippo"><a href="/about">About</a></p>
+      <p class="home-thumb"><a href="/about"><img src="/static/img/img8.jpg"></a></p>
+    </div>
+    <a href="/people/">
+      <div class="span3" style="background:#4af; height:160px; text-align:center; color:#fff;">
+        <i class="icon-group" style="color:#fff; font-size: 60px; line-height: 2em; text-align:center"></i>
+        <p style="font-size:1.5em; line-height:0">People</p>
+      </div>
+    </a>
+    <div class="span3" style="background:url(/static/img/img7.jpg) no-repeat; height:160px; color:#fff;"></div>
+    <a href="/documents"><div class="span3" style="background:rgb(0, 136, 255); height:160px; text-align:center; color:#fff;">
+      <i class="icon-file-text-alt" style="color:#fff; font-size: 60px; line-height: 2em; text-align:center"></i>
+      <p style="font-size:1.5em; line-height:0">Documents</p>
+    </div></a>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,140 @@
+{% extends "people/profile_base.html" %}
+{% load static %}
+{% load friendly_loader %}
+{% friendly_load i18n avatar_tags relationship_tags activity_tags %}
+{% load pagination_tags %}
+
+{% block title %} {% trans "Profile of " %}{{ profile.name|default_if_none:profile.user.username }}{% endblock %}
+
+{% block body_class %}people people-list explore{% endblock %}
+
+{% block body %}
+  <div class="span8">
+    <div class="avatar pull-left span2">{% avatar profile.user 140 %}
+      {% if_has_tag actor_url %}
+      <p class="clearfix"><a href="{% actor_url profile.user %}" class="btn btn-block btn-danger" type="button">{% trans "Activities" %}</a></p>
+    {% endif_has_tag %}
+    </div>
+    <h2 class="page-title span6">{{ profile.name|default_if_none:profile.user.username }}</h2>
+    <div class="profile-info span6">
+      <dl class="dl-horizontal meta">
+        <dt><i class="icon-user"></i></dt>
+        <dd>{{ profile.user.username }}<br />
+        {% if profile.position %}{{ profile.position }}{% endif %}
+        {{ profile.organization|default_if_none:"Organization N/A" }}
+        {% if profile.profile %}<br />{{ profile.profile }}{% endif %}</dd>
+        <dt><i class="icon-map-marker"></i></dt>
+        <dd>{% if profile.profile %}{{ profile.delivery }}<br />{% endif %}
+          {% if profile.profile %}{{ profile.zipcode }} {% endif %}
+          {{ profile.city|default_if_none:"Location N/A" }} 
+          {% if profile.area %}{{ profile.area }}{% endif %}
+          {% if profile.country %}<br />{{ profile.country|default_if_none:"not available" }}{% endif %}</dd>
+        {% if user.is_authenticated %}
+          {% if profile.voice %}
+          <dt><i class="icon-phone"></i></dt>
+          <dd>{{ profile.voice }}</dd>
+          {% endif %}
+          {% if profile.fax %}
+          <dt><i class="icon-print"></i></dt>
+          <dd>{{ profile.fax }}</dd>
+          {% endif %}
+        {% endif %}
+        <dt></dt>
+        <dd>{% for tag in profile.keywords.all %}
+              {{ tag.name }}
+            {% endfor %}</dd>
+      </dl>
+    </div>
+  </div>
+
+  <aside class="span4">
+    <div class="well">
+      {% if user == profile.user %}
+        <ul class="nav nav-list">
+          <li><a href="{% url "profile_edit" user.username %}">{% trans "Edit profile information" %}</a></li>
+          <li><a href="{% url "account_settings" %}">{% trans "Account Settings" %}</a></li>
+          <li><a href="{% url "account_password" %}">{% trans "Change password" %}</a></li>
+          <li><a href="{% url "layer_upload" %}">{% trans "Upload new layers" %}</a></li>
+          <li><a href="{% url "new_map" %}">{% trans "Create a new map" %}</a></li>
+        </ul>
+        {% if_has_tag if_relationship %}
+          {% include "relationships/_manage_connections.html" %}
+        {% endif_has_tag %}
+      {% else %}
+        {% if_has_tag if_relationship %}
+          {% include "relationships/_profile_follow.html" %}
+        {% endif_has_tag %}
+      {% endif %}
+      {% if_has_tag if_relationship %}
+        {% include "relationships/_list_connections.html" %}
+      {% endif_has_tag %}
+    </div>
+  </aside>
+
+  <div class="span12">
+    <h3>Resources</h3>
+  </div>
+  <div class="span8 filter">
+    {% include "people/_profile_filters.html" %}
+  </div>
+  <div class="span4">
+    <div class="pull-right" data-viewby="list">
+      {% include "_viewby.html" %}
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="span12">
+      <div class="tab-content span12 paginate paginate-auto">
+        {% if object_list|length > 0 %}
+        <div class="tab-pane active list paginate-contents" id="all">
+          {% if object_list|length > 0 %}
+            {% autopaginate object_list 5 %}
+            {% for obj in object_list %}
+            <article>
+              <div class="content">
+                <div class="item-header">
+                {% if obj.class_name = 'Map' %}
+                  <img class="thumb" src="/uploaded/{{ obj.thumbnail.thumb_file }}" />
+                  <h3><i class="icon-map-marker"></i>
+                {% endif %}
+                {% if obj.class_name = 'Layer' %}
+                  <img class="thumb" src="/uploaded/{{ obj.thumbnail.thumb_file }}" />
+                  <h3><i class="icon-unchecked icon-rotate-45"></i>
+                {% endif %}
+                {% if obj.class_name = 'Document' %}
+                  <img class="thumb" src="{{ STATIC_URL }}img/doc-placeholder.png" />
+                  <h3><i class="icon-file-text-alt"></i>
+                {% endif %}
+                    <a href="{{ obj.get_absolute_url }}">{{ obj.title }}</a>
+                  </h3>
+                </div>
+                <div class="details">
+                  <div class="meta">
+                    <p class="resources-abstract">{{ obj.abstract }}</p>
+                    <p class="sharing-date">{% trans "Shared on" %} {{ obj.date|date:"d b Y" }}</p>
+                  </div>
+                </div>
+              </article>
+              {% endfor %}
+            {% endif %}
+          </div>
+          {% if object_list|length > 0 %}
+            {% paginate %}
+          {% endif %}
+        </div>
+        {% else %}
+        </div>
+        <article>
+          <p>{% trans "No contents found." %}</p>
+        </article>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block extra_script %}  
+  {% include 'search_scripts.html' %}
+{% endblock extra_script %}
+

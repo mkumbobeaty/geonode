@@ -1,0 +1,203 @@
+{% extends 'index.html' %}
+{% load i18n %}
+{% load maps_tags %}
+{% load layers_tags %}
+{% load pagination_tags %}
+{% comment %}
+This is where you can override the hero area block. You can simply modify the content below or replace it wholesale to meet your own needs. 
+{% endcomment %}
+
+{% block extra_head %}
+
+<style>
+  /* Carousel base class */
+  .carousel {
+    background: #605e5e;
+    margin-bottom: 0px;
+    margin-top: 80px;
+  }
+  .carousel .container {
+    position: relative;
+    z-index: 9;
+  }
+  .carousel-control {
+    background-color: transparent;
+    border: 0;
+    font-size: 8em;
+    height: 60px;
+    margin-top: 0;
+    text-shadow: 0 1px 1px rgba(0,0,0,.4);
+    z-index: 10;
+  }
+    .carousel .item {
+      height: 300px;
+    }
+    .carousel img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      min-height: 300px;
+      min-width: 100%;
+      overflow: hidden;
+    }
+
+    .carousel-caption {
+      background: none;
+      position: static;
+      padding: 0;
+      margin-top: 60px;
+      width: 860px;
+    }
+    .carousel-caption h1 {
+      color: #fff;
+      font-size: 3em;
+      font-weight: 400;
+      line-height: 0.5em;
+      margin: 0;
+      padding: 20px;
+      text-shadow: 2px 2px 2px rgba(0,0,0,.4);
+    }
+    .carousel-caption .lead {
+      color: #fff;
+      font-weight: 600;
+      line-height: 1.125em;
+      padding: 20px;
+      text-shadow: 2px 2px 2px rgba(0,0,0,.4);
+    }
+
+    </style>
+{% endblock %}
+
+{% block jumbotron %}
+<!-- Carousel
+    ================================================== -->
+    <div id="myCarousel" class="carousel slide">
+      <div class="carousel-inner">
+        <div class="item active">
+          <img src="{{ STATIC_URL }}img/layerslider01.jpg" alt="">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>{% trans "Welcome to the " %}<strong>WFP</strong>GeoNode</h1>
+              <p class="lead">{% trans "Our corporate web application for creating and sharing geospatial " %}<br />
+              {% trans "data and maps designed for non-GIS experts." %}</p>
+              <a class="btn btn-danger" href="/help/">{% trans "Get Started" %}</a>
+              <p class="image-credit">Image Credit: NASA</p>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img src="{{ STATIC_URL }}img/layerslider02.jpg" alt="">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>{% trans "Interactive mapping" %}</h1>
+              <p class="lead">{% trans "You can combine already existing layers with your own data to create" %}<br />
+              {% trans "powerful interactive maps accessible from all devices." %}</p>
+              <a class="btn btn-danger" href="/maps/">{% trans "Explore Maps" %}</a>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img src="{{ STATIC_URL }}img/layerslider03.jpg" alt="">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>{% trans "GIS data standardization" %}</h1>
+              <p class="lead">{% trans "GeoNode facilitates data standardization within our organization by providing" %}<br />
+              {% trans "a clear process for uploading your gis data, compiling metadata and styling." %}</p>
+              <a class="btn btn-danger" href="/upload/">{% trans "Upload Layers" %}</a>
+              <p class="image-credit">Photo: WFP/Louis Hamann</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+      <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
+    </div><!-- /.carousel -->
+
+    <section class="social">
+      <div class="container">
+        <div class="row">
+          <div class="span8">
+            <div class="row">
+              <div class="span2"><p><a href="/layers/">{% trans "Layers" %} <span class="count">{{ facets.layers }}</span></a></p></div>
+              <div class="span2"><p><a href="/maps/">{% trans "Maps" %} <span class="count">{{ facets.maps }}</span></a></p></div>
+              <div class="span2"><p><a href="/documents/">{% trans "Documents" %} <span class="count">{{ facets.documents }}</span></a></p></div>
+              <div class="span2"><p><a href="/people/">{% trans "Users" %} <span class="count">{{ facets.users }}</span></a></p></div>
+            </div>
+          </div>
+          <div class="span4">
+            <form class="input-append pull-right" action="{% url "search" %}" method="GET">
+              {# csrf_token #}
+              <input id="search" placeholder="{% trans 'Search...' %}" type="text" name="q"/>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+{% endblock %}
+
+{% block hero %}
+{% endblock %}
+
+{% block mainbody %}
+<!-- featured maps -->
+<!-- <section class="featured-maps">
+  <h3>{% trans "Recent Maps" %}</h3>
+  <div class="row">
+    {% for map in featured_maps %}
+    <div class="span3">
+      <div class="map-thumb">
+        <a href="{% url "map_detail" map.id %}/view" class="map-link">
+          <img src="{{ MEDIA_URL }}{{ map.thumbnail.thumb_file.name }}" />
+        </a>
+        <div class="map-abstract">
+          <p><a href="{% url "map_detail" map.id %}/view">{% trans "from" %} <strong>{{ map.owner }}</strong>, <em class="timestamp">{{ map.last_modified|date:"M d Y" }}</em></a></p>        
+          <p><a href="{% url "map_detail" map.id %}/view">{{ map.abstract|truncatewords:"30" }}</a></p>
+        </div>
+        <div class="map-title"><a href="{% url "map_detail" map.id %}/view" class="map-link">{{ map.title }}</a></div>
+        <div class="views pull-right"><i class="icon-eye-open"></i>{{ map.popular_count }}</div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section> -->
+
+<section class="boxes">
+<div class="row">
+  <div class="span4">
+    <a href="/layers/" class="div-link">
+      <div class="row">
+        <div class="span1">
+          <i class="icon-unchecked icon-rotate-45 icon-4x"></i>
+        </div>
+        <div class="span3">
+          <h3>{% trans "Explore Data" %}</h3>
+          <p>{% trans "Click to search for geospatial data from our corporate SDI or published by other users, organizations and public sources." %}</p>
+        </div>
+      </div>
+    </a>
+  </div>
+  <div class="span4">
+    <a href="/maps/" class="div-link">
+      <div class="row">
+        <div class="span1" style="text-align:center"><i class="icon-map-marker icon-4x"></i></div>
+        <div class="span3">
+          <h3>{% trans "Explore Maps" %}</h3>
+          <p>{% trans "Data is available for browsing, aggregating and styling to generate maps which can be shared publicly or restricted to specific users only." %}</p>
+        </div>
+      </div>
+    </a>
+  </div>
+  <div class="span4">
+    <a href="/upload/" class="div-link">
+    <div class="row">
+      <div class="span1"><i class="icon-cloud-upload icon-4x"></i></div>
+        <div class="span3">
+          <h3>{% trans "Upload Data" %}</h3>
+          <p>{% trans "GeoNode allows registered users fo easily upload geospatial data in several formats including shapefile, GeoTiff and KML" %}.</p>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
+</section>
+{% endblock %}

@@ -1,0 +1,153 @@
+{% extends 'index.html' %}
+{% load i18n %}
+{% load maps_tags %}
+{% load layers_tags %}
+{% load pagination_tags %}
+{% load staticfiles %}
+{% load url from future %}
+{% comment %}
+This is where you can override the hero area block. You can simply modify the content below or replace it wholesale to meet your own needs. 
+{% endcomment %}
+
+{% block extra_head %}
+
+<style>
+  /* Carousel base class */
+  .carousel {
+    background: #605e5e;
+    margin-bottom: 0px;
+  }
+
+    .carousel .container {
+      position: relative;
+      z-index: 9;
+    }
+
+    .carousel-control {
+      height: 60px;
+      margin-top: 0;
+      font-size: 120px;
+      text-shadow: 0 1px 1px rgba(0,0,0,.4);
+      background-color: transparent;
+      border: 0;
+      z-index: 10;
+    }
+
+    .carousel .item {
+      height: 340px;
+    }
+    .carousel img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      min-width: 100%;
+      height: 340px;
+    }
+
+    .carousel-caption {
+      background-color: transparent;
+      position: static;
+      max-width: 550px;
+      padding: 0;
+      margin-top: 100px;
+    }
+    .carousel-caption h1,
+    .carousel-caption .lead {
+      margin: 0;
+      line-height: 1.25;
+      color: #fff;
+      text-shadow: 0 1px 1px rgba(0,0,0,.4);
+    }
+    .carousel-caption .btn {
+      margin-top: 10px;
+    }
+
+    </style>
+{% endblock %}
+
+{% block jambotron %}
+<!-- Carousel
+    ================================================== -->
+    <div id="myCarousel" class="carousel slide">
+      <div class="carousel-inner">
+        <div class="item active">
+          <img src="/static/img/jumbo01.jpg" alt="">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>WFP GeoNode</h1>
+              <p class="lead">An open source platform for creating and sharing geospatial data and maps.</p>
+              <a class="btn btn-large btn-primary" href="/about">Learn more</a>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img src="/static/img/jumbo02.jpg" alt="">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>Create and Share Maps</h1>
+              <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+              <div class="btns">
+                <a class="btn btn-large btn-primary" href="{% url "layer_browse" %}">{% trans "Explore Layers" %}</a>
+                <a class="btn btn-large btn-primary" href="{% url "maps_browse" %}">{% trans "Explore Maps" %}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img src="/static/img/jumbo03.jpg" alt="">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>Contribute</h1>
+              <p class="lead">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+              <div class="btns">
+                <a href="{% url "data_upload" %}" class="btn btn-large btn-primary">{% trans 'Upload Layers' %}</a>
+                <a href="{% url "new_map" %}" class="btn btn-large btn-primary">{% trans 'Create a Map' %}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+      <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
+    </div><!-- /.carousel -->
+{% endblock %}
+
+{% block hero %}
+<div class="row">
+<div class="hero-unit">
+  <h1>{% trans "Welcome to" %} WFP GeoNode</h1>
+  <div class="hero-unit-content">
+    <div class="intro">
+      <p>
+        {% blocktrans %}
+        An open source platform for creating and sharing geospatial data and maps. If you want to learn how to use the platform at the best, take a look at our <a href="#">Training Modules</a>.
+        {% endblocktrans %}
+      </p>
+    </div>
+  </div>
+</div>
+</div>
+{% endblock %}
+
+{% block mainbody %}
+<div class="row">
+  <div class="span4">
+    <section>
+      <h2>Explore Data</h2>
+      <p>Some text here.</p>
+    </section>
+  </div>
+  <div class="span4">
+    <section>
+      <h2>Explore Maps</h2>
+      <p>Some text here.</p>
+    </section>
+  </div>
+  <div class="span4">
+    <section>
+      <h2>Get Started</h2>
+      <p>Some text here.</p>
+    </section>
+  </div>
+</div>
+{% endblock %}

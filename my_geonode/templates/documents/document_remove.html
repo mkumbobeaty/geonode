@@ -1,0 +1,34 @@
+{% extends "documents/document_base.html" %}
+{% load i18n %}
+
+{% block title %}{{ document.title }} — {{ block.super }}{% endblock %}
+
+{% block jumbotron %}
+<header class="jumbotron">
+  <div class="container">
+    <div class="row">
+      <h1 class="span6"><i class="icon-file-text-alt"></i>{% trans "Remove a Document" %}</h1>
+      <a href="{% url "documents_browse" %}" class="btn btn-primary pull-right">{% trans "Explore Documents" %}</a>
+    </div>
+  </div>
+</header>
+{% endblock %}
+
+{% block body %}
+<div class="span12">
+  <!-- <h2 class="page-title">{% trans "Remove a Document" %}</h2> -->
+  <p>
+    {% blocktrans with document.title as document_title %}
+      Are you sure you want to remove {{ document_title }}?
+    {% endblocktrans %}
+  </p>
+  <div class="form-actions">
+    <form action="{% url "document_remove" document.id %}" method="POST">
+      {% csrf_token %}
+      <input type="hidden" value="{{ document.typename }}" />
+      <input type="submit" value="{% trans "Yes, I am sure" %}" class="btn btn-danger" />
+      <a href="{{ document.get_absolute_url }}" class="btn">{% trans "No, don't remove it" %}</a>
+    </form>
+  </div>
+</div>
+{% endblock %}

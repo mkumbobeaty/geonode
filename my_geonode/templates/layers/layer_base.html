@@ -1,0 +1,29 @@
+{% extends "site_base.html" %}
+{% load i18n %}
+{% load url from future %}
+
+{% block title %} {{ block.super }} {% endblock %}
+
+{% block body_class %}data{% endblock %}
+
+{% block jumbotron %}
+<header class="jumbotron">
+  <div class="container">
+    <div class="row">
+      <h1 class="span6"><i class="icon-unchecked icon-rotate-45"></i>{% trans "Explore Layers" %}</h1>
+      <a href="{% url "data_upload" %}" class="btn btn-large btn-danger pull-right">{% trans "Upload Layers" %}</a>
+    </div>
+  </div>
+</header>
+{% endblock %}
+
+{% block body_outer %}
+  <!-- <div class="span12">
+    <ul class="nav nav-tabs" id="subnav-tabs">
+      <li><a href="{% url "layer_browse" %}" class="explore">{% trans "Explore Layers" %}</a></li>
+      <li><a href="{% url "data_upload" %}" class="upload">{% trans "Upload Layers" %}</a></li>
+    </ul>
+  </div> -->
+  {% block body %}{% endblock body %}
+  {% block sidebar %}{% endblock sidebar %}
+{% endblock body_outer %}

@@ -1,0 +1,57 @@
+{% extends "site_base.html" %}
+{% load pagination_tags %}
+{% load staticfiles %}
+{% load url from future %}
+{% load i18n %}
+{% block title %} {% trans "Announcements" %} - {{ block.super }} {% endblock %}
+
+{% block body_class %}maps{% endblock %}
+
+{% block jumbotron %}
+<header class="jumbotron">
+  <div class="container">
+    <div class="row">
+      <h1 class="span6"><i class="icon-bullhorn"></i>{% trans 'Announcements' %}</h1>
+      <a href="{% url "announcements_create" %}" class="btn btn-primary pull-right">{% trans "New Announcement" %}</a>
+    </div>
+  </div>
+</header>
+{% endblock %}
+
+{% block body_outer %}
+{% block body %}
+<!-- <div class="span12">
+  <a href="{% url "announcements_create" %}" class="btn btn-primary pull-right">{% trans "New Announcement" %}</a>
+  <h2 class="page-title">{% trans "Announcements" %}</h2>
+</div> -->
+<div class="span12">
+  <div class="row" id="contain-slider">
+    <div class="tab-content span12 paginate paginate-auto" id="search-content">
+      <table class="table">
+        <thead>
+          <td><strong>{% trans "Title" %}</strong></td>
+          <td><strong>{% trans "Announcement" %}</strong></td>
+          <td><strong>{% trans "Published From" %}</strong></td>
+        </thead>
+        {% for announcement in announcement_list %}
+        <tr>
+          <td>
+            <a href="{% url "announcements_update" pk=announcement.pk %}">{{ announcement.title|truncatewords:50  }}</a>
+          </td>
+          <td>
+            {{ announcement.content|truncatewords:8 }}
+          </td>
+          <td>
+            {% if announcement.publish_start or announcement.publish_end %}
+            From <strong>{{ announcement.publish_start|date:"M j, Y" }}</strong> to
+            <strong>{{ announcement.publish_end|date:"M j, Y"|default:"(no end date)" }}</strong>.
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% endblock %}
