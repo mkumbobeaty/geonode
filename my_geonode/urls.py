@@ -26,10 +26,12 @@ from geonode.urls import urlpatterns
 urlpatterns += [
 ## include your urls here
 
+
 ]
 
 urlpatterns = [
    url(r'^/?$',
        TemplateView.as_view(template_name='site_index.html'),
        name='home'),
+       
  ] + urlpatterns

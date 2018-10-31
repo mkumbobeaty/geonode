@@ -1,0 +1,20 @@
+{% load pagination_tags %}
+{% load i18n %}
+<div class="tab-pane active list paginate-contents" id="all">
+  <p class="search-count">Total: {{ total }}</p>
+{% if object_list|length > 0 %}
+{% autopaginate object_list 4 %}
+{% for object in object_list %}
+  {% with object.o as document %}
+    {% if document.wfpdocument %}
+      {% include "wfpdocs/_document_list_item.html" %}
+    {% endif %}
+  {% endwith %}
+{% endfor %}
+{% else %}
+  <p class="search-count">{% trans "No data found" %}</p>
+{% endif %}
+</div>
+{% if object_list|length > 0 %}
+  {% paginate %}
+{% endif %}

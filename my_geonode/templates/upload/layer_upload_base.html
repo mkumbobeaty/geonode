@@ -7,12 +7,11 @@
 {% block body_class %}data{% endblock %}
 
 {% block jumbotron %}
-
 <header class="jumbotron">
   <div class="container">
     <div class="row">
-      <h1 class="span6"><i class="icon-unchecked icon-rotate-45"></i>{% trans "Explore Layers" %}</h1>
-      <a href="{% url "data_upload" %}" class="btn btn-large btn-danger pull-right">{% trans "Upload Layers" %}</a>
+      <h1 class="span6"><i class="icon-unchecked icon-rotate-45"></i>{% trans "Upload Layers" %}</h1>
+      <a href="{% url "layer_browse" %}" class="btn btn-primary pull-right">{% trans "Explore Layers" %}</a>
     </div>
   </div>
 </header>
@@ -25,6 +24,12 @@
       <li><a href="{% url "data_upload" %}" class="upload">{% trans "Upload Layers" %}</a></li>
     </ul>
   </div> -->
-  {% block body %}{% endblock body %}
-  {% block sidebar %}{% endblock sidebar %}
+  <div class="row">
+    <div class="span8">
+    {% block body %}{% endblock body %}
+    </div>
+    <div class="span4 permissions">
+    {% block sidebar %}{% endblock sidebar %}
+    </div>
+  </div>
 {% endblock body_outer %}

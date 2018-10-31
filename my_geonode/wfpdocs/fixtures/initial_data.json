@@ -1,0 +1,149 @@
+[
+{
+    "pk": 1, 
+    "model": "wfpdocs.category", 
+    "fields": {
+        "name": "Floods"
+    }
+},
+{
+    "pk": 2, 
+    "model": "wfpdocs.category", 
+    "fields": {
+        "name": "Drought"
+    }
+},
+{
+    "pk": 3, 
+    "model": "wfpdocs.category", 
+    "fields": {
+        "name": "Earthquake"
+    }
+},
+{
+    "pk": 4, 
+    "model": "wfpdocs.category", 
+    "fields": {
+        "name": "Tropical Storm"
+    }
+},
+{
+    "pk": 5, 
+    "model": "wfpdocs.category", 
+    "fields": {
+        "name": "Volcano"
+    }
+},
+{
+    "pk": 6, 
+    "model": "wfpdocs.category", 
+    "fields": {
+        "name": "Tsunami"
+    }
+},
+{
+    "pk": 7, 
+    "model": "wfpdocs.category", 
+    "fields": {
+        "name": "Fire"
+    }
+},
+{
+    "pk": 8, 
+    "model": "wfpdocs.category", 
+    "fields": {
+        "name": "Logistics"
+    }
+},
+{
+    "pk": 9, 
+    "model": "wfpdocs.category", 
+    "fields": {
+        "name": "Population Displacement"
+    }
+},
+{
+    "pk": 10, 
+    "model": "wfpdocs.category", 
+    "fields": {
+        "name": "Food Security"
+    }
+},
+{
+    "pk": 11, 
+    "model": "wfpdocs.category", 
+    "fields": {
+        "name": "Vulnerability Analysis"
+    }
+},
+{
+    "pk": 12, 
+    "model": "wfpdocs.category", 
+    "fields": {
+        "name": "Emergency"
+    }
+},
+{
+    "pk": 13, 
+    "model": "wfpdocs.category", 
+    "fields": {
+        "name": "Epidemic"
+    }
+},
+{
+    "pk": 14, 
+    "model": "wfpdocs.category", 
+    "fields": {
+        "name": "Severe Weather"
+    }
+},
+{
+    "pk": 15, 
+    "model": "wfpdocs.category", 
+    "fields": {
+        "name": "Conflict"
+    }
+},
+{
+    "pk": 16, 
+    "model": "wfpdocs.category", 
+    "fields": {
+        "name": "Land Slide"
+    }
+},
+{
+    "pk": 17, 
+    "model": "wfpdocs.category", 
+    "fields": {
+        "name": "Telecommunications"
+    }
+},
+{
+    "pk": 18, 
+    "model": "wfpdocs.category", 
+    "fields": {
+        "name": "Unrest"
+    }
+},
+{
+    "pk": 19, 
+    "model": "wfpdocs.category", 
+    "fields": {
+        "name": "Weather Forecast"
+    }
+},
+{
+    "pk": 20, 
+    "model": "wfpdocs.category", 
+    "fields": {
+        "name": "WFP Thematic"
+    }
+},
+{
+    "pk": 21, 
+    "model": "wfpdocs.category", 
+    "fields": {
+        "name": "Other"
+    }
+}
+]

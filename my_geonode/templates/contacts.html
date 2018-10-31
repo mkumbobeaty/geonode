@@ -1,0 +1,47 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load friendly_loader %}
+{% friendly_load avatar_tags %}
+{% friendly_load relationship_tags %}
+
+{% block title %} {% trans "GeoNode Contacts" %} — {{ block.super }} {% endblock %}
+
+{% block body_class %}contacts{% endblock %}
+
+{% block jumbotron %}
+<header class="jumbotron">
+  <div class="container">
+    <div class="row">
+      <h1 class="span6"><i class="icon-hand-right"></i>{% trans "GeoNode Contacts" %}</h1>
+    </div>
+  </div>
+</header>
+{% endblock %}
+
+{% block body %}
+
+  <p><strong>WFP</strong>GeoNode is the WFP's corporate web application for creating and sharing geospatial data and maps.</p>
+  <p>It has been designed by the Emergency Preparedness and Response Unit (WFP OMEP) to empower non-GIS experts to easily produce maps with information already available in GeoNode or uploaded through a very simple process.</p>
+  <p>If you want to learn more about the WFPGeoNode or experience any problem while using it please contact <a href="mailto:omep.gis@wfp.org">omep.gis@wfp.org</a> and an expert will get back to you soon.</p>
+  <h3>OMEP GIS Team</h3>
+
+<div class="row">
+  <div class="span12">
+    <ol class="people group">
+      {% for profile in profiles %}
+        <li class="group">
+          <a href="{% url "profile_detail" profile.user.username %}" >{% avatar profile.user 218 %}</a>
+          <h3><i class="icon-user"></i> <a href="{% url "profile_detail" profile.user.username %}">{{ profile.name }}</a>
+          {% if user.is_authenticated %}
+            {% if  profile.email %}<a href="mailto:{{ profile.user.email }}"><i class="icon-envelope-alt icon-large"></i></a>{% endif %}
+          {% endif %}
+          </h3>
+        </li>
+      {% endfor %}
+    </ol>
+  </div>
+</div>
+  
+
+{% endblock %}

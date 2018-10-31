@@ -1,0 +1,21 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% block title %} {% trans "About GeoNode" %} — {{ block.super }} {% endblock %}
+
+{% block jumbotron %}
+<header class="jumbotron">
+  <div class="container">
+    <div class="row">
+      <h1 class="span6"><i class="icon-globe"></i>{% trans "About GeoNode" %}</h1>
+    </div>
+  </div>
+</header>
+{% endblock %}
+
+{% block body %}
+
+  <p class="lead">{% trans "About GeoNode." %}</p>
+  <p>Stub</p>
+
+{% endblock %}

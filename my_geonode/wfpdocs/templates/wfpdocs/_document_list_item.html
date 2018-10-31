@@ -1,0 +1,34 @@
+{% load url from future %}
+{% load i18n %}
+{% load agon_ratings_tags %}
+{% load documents_tags %}
+{% load base_tags %}
+
+{% overall_rating document "document" as document_rating %}
+{% num_ratings document as num_votes %}
+<article>
+  <div class="content">
+    <div class="item-header">
+      <a href="{% url "map_detail" document.id %}"><img class="thumb" src="{{ document.get_thumbnail_url }}" /></a>
+      <h3><i class="icon-file-text-alt"></i> <a href="{% url "wfpdocs-detail" document.id %}">{{ document.title }}</a></h3>
+    </div>
+    <div class="details">
+      <div class="meta">
+        <p>Doc {% trans 'from' %}: <a href="{% url "profile_detail" document.owner.username %}">{{ document.owner }}</a>, {{ document.date|timesince }} {% trans 'ago' %}</p>
+        <p>{% trans 'Published' %}: {{ document.date }}</p>
+        <p>{% trans 'Print Format' %}: {{ document.wfpdocument.get_page_format_display }}</p>
+        <p>{% trans 'Orientation' %}: {{ document.wfpdocument.get_orientation_display }}</p>
+        <p>{% trans 'Source' %}: {{ document.wfpdocument.source }}</p>
+        <p>{% trans 'Regions' %}: {{ document.wfpdocument.get_regions }}</p>
+        <p>{% trans 'Categories' %}: {{ document.wfpdocument.get_categories }}</p>
+        <ul class="nav stats">
+          <li><a href="{% url "document_detail" document.id %}"><strong>{{ document.popular_count }}</strong> {% trans "view" %}{{ document.popular_count|pluralize }}</a></li>
+          <li><a href="{% url "document_detail" document.id %}#rate"><strong><span class="overall_rating"></span></strong><span class="avg_rating" data-rating="{{ document_rating }}">{{num_votes}} {% trans "ratings" %}</span></a></li>
+        </ul>
+      </div>
+      <div class="tools pull-right">
+        <a href="{% if document.doc_file %}{{ document.doc_file.url }}{% endif %}" class="btn btn-mini btn-danger pull-right">{% trans "Download" %}</a>
+      </div>
+    </div>
+  </div>
+</article>
